@@ -3,7 +3,7 @@ package seedu.duke.command;
 import org.junit.jupiter.api.Test;
 import seedu.duke.model.ActivityList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AddActivityCommandTest {
 
@@ -23,7 +23,6 @@ class AddActivityCommandTest {
                 📆 Date: 2026-06-28
                 🕛 Time: 08:00 to 14:00
                 """, message);
-
     }
 
     @Test
@@ -41,6 +40,6 @@ class AddActivityCommandTest {
                 📆 Date: ---
                 🕛 Time: ---
                 """, message);
-
     }
+
 }

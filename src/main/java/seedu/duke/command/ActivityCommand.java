@@ -1,9 +1,6 @@
 package seedu.duke.command;
 
-import seedu.duke.model.Activity;
 import seedu.duke.model.ActivityList;
-
-import java.util.ArrayList;
 
 public abstract class ActivityCommand {
 

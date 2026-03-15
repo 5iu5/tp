@@ -44,4 +44,5 @@ public class EditActivityCommandTest {
 
         assertEquals("Oops! Invalid activity index provided.", message);
     }
+
 }

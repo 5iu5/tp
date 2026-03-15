@@ -12,7 +12,8 @@ public class DeleteActivityCommandTest {
     @Test
     void execute_validIndex_successfulMessageAndRemovedFromList() {
         ActivityList activityList = new ActivityList();
-        activityList.add(new Activity("Hiking at Mount Fuji", "Mount Fuji", "2026-06-28", "08:00", "14:00"));
+        activityList.add(new Activity("Hiking at Mount Fuji", "Mount Fuji", "2026-06-28",
+                "08:00", "14:00"));
         String tripName = "Japan Trip";
 
         DeleteActivityCommand deleteCommand = new DeleteActivityCommand(activityList, 1);
@@ -26,7 +27,8 @@ public class DeleteActivityCommandTest {
     @Test
     void execute_invalidIndex_errorMessage() {
         ActivityList activityList = new ActivityList();
-        activityList.add(new Activity("Tokyo Skytree", "Tokyo", "2026-06-29", "09:00", "11:00"));
+        activityList.add(new Activity("Tokyo Skytree", "Tokyo", "2026-06-29",
+                "09:00", "11:00"));
         String tripName = "Japan Trip";
 
         // Try to delete index 0 (user input is 1-based, so 0 is invalid)
