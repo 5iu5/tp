@@ -1,4 +1,6 @@
-package seedu.duke.model;
+package main.java.seedu.duke.model;
+
+import main.java.seedu.duke.model.activity.ActivityList;
 
 public class Trip {
     private String destination;
@@ -43,11 +45,11 @@ public class Trip {
 
     @Override
     public String toString() {
-        return destination + " (" + startDate + " to " + endDate + ")";
+        return name + " (" + startDate + " to " + endDate + ")";
     }
 
     public String formatForList() {
-        String result = destination + "\n";
+        String result = name + "\n";
         result += "   📅 Start: " + startDate + "\n";
         result += "   📅 End:   " + endDate;
         return result;
