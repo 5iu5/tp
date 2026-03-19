@@ -16,7 +16,7 @@ public class OpenTripCommand extends TripCommand {
             return "Invalid trip index.";
         }
         Trip tripToOpen = tripList.get(index);
-        ActivityCommand.setTripOpen(true);
+        tripToOpen.setOpen(true);
         return "Opened trip: " + tripToOpen.getDestination();
     }
     
