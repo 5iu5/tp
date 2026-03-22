@@ -28,7 +28,8 @@ public class TravelTrio {
     public static void main(String[] args) {
         System.out.println("Welcome to \n" + LOGO);
         System.out.println("How can I help you plan today?");
-        System.out.println("Commands: addtrip, listtrip, opentrip, deletetrip, addactivity, listactivity, editactivity, deleteactivity, exit");
+        System.out.println("Commands: addtrip, listtrip, opentrip, deletetrip, "
+                + "addactivity, listactivity, editactivity, deleteactivity, exit");
 
         while (true) {
             System.out.println("> ");
@@ -80,7 +81,9 @@ public class TravelTrio {
                     String date = promptField("Date (YYYY-MM-DD)");
                     String startTime = promptField("Start Time (HH:MM)");
                     String endTime = promptField("End Time (HH:MM)");
-                    System.out.println(new AddActivityCommand(openTrip.getActivities(),title, location, date, startTime, endTime).execute(openTrip.getName()));
+                    System.out.println(new AddActivityCommand(openTrip.getActivities(),
+                            title, location, date, startTime, endTime)
+                            .execute(openTrip.getName()));
                     break;
 
                 case "listactivity":
@@ -98,7 +101,10 @@ public class TravelTrio {
                     String newDate = promptField("New Date (YYYY-MM-DD)");
                     String newStartTime = promptField("New Start Time (HH:MM)");
                     String newEndTime = promptField("New End Time (HH:MM)");
-                    System.out.println(new EditActivityCommand(openTrip.getActivities(), activityIdx, newTitle, newLocation, newDate, newStartTime, newEndTime).execute(openTrip.getName()));
+                    System.out.println(new EditActivityCommand(openTrip.getActivities(),
+                            activityIdx, newTitle, newLocation, newDate, newStartTime, newEndTime)
+                            .execute(openTrip.getName()));
+
                     break;
 
                 case "deleteactivity":
@@ -109,7 +115,9 @@ public class TravelTrio {
                     break;
 
                 default:
-                    System.out.println("Unknown command. Available commands: addtrip, listtrip, opentrip, deletetrip, addactivity, listactivity, editactivity, deleteactivity, exit"); 
+                    System.out.println("Unknown command. Available commands: addtrip, listtrip, "
+                            + "opentrip, deletetrip, addactivity, listactivity, "
+                            + "editactivity, deleteactivity, exit"); 
                 }
             } catch (Exception e){
                 System.out.println("Error. " + e.getMessage());
