@@ -111,7 +111,8 @@ public class TravelTrio {
                     ensureTripOpen();
                     System.out.println(new ListActivityCommand(openTrip.getActivities()).execute(openTrip.getName()));
                     int actIdx = promptInt("Enter the number of the activity to delete");
-                    System.out.println(new DeleteActivityCommand(openTrip.getActivities(), actIdx).execute(openTrip.getName()));
+                    System.out.println(new DeleteActivityCommand(openTrip.getActivities(), actIdx)
+                            .execute(openTrip.getName()));
                     break;
 
                 default:
