@@ -78,9 +78,10 @@ public class CommandProcessor {
     }
 
     private void handleUnknownCommand() {
-        ui.showMessage("Unknown command. Available commands: addtrip, listtrip, "
-                + "opentrip, deletetrip, addactivity, listactivity, "
-                + "editactivity, deleteactivity, addbudget, budgetsummary, exit");
+        ui.showError("Unknown command.\n"
+                + "Available commands: addtrip, listtrip, opentrip, deletetrip,\n"
+                + "addactivity, listactivity, editactivity, deleteactivity,\n"
+                + "addbudget, setexpense, budgetsummary, help, exit");
     }
 
     private void handleBudgetSummary() throws TravelTrioException {
