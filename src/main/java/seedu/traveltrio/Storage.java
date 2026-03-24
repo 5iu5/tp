@@ -35,13 +35,13 @@ public class Storage {
      */
     public TripList load() throws TravelTrioException {
         TripList trips = new TripList();
-        try {
-            File file = new File(filePath);
-            if (!file.exists()) {
-                return trips;
-            }
 
-            Scanner fileScanner = new Scanner(file);
+        File file = new File(filePath);
+        if (!file.exists()) {
+            return trips;
+        }
+
+        try (Scanner fileScanner = new Scanner(file)) {
             Trip currentTrip = null;
             Activity lastActivity = null;
             String currentDate = "";
@@ -67,7 +67,7 @@ public class Storage {
                     assert currentTrip != null: "No trip open!";
                     loadBudgetDetails(lastActivity, line, fileScanner, currentTrip);
                 } else {
-                    ui.showError("Line wrongly formatted found. [" + line + "]. ");
+                    ui.showError("Line wrongly formatted found. [" + line + "]. Check formatting before continuing.");
                 }
             }
             fileScanner.close();
@@ -78,7 +78,8 @@ public class Storage {
         return trips;
     }
 
-    private static void loadBudgetDetails(Activity lastActivity, String line, Scanner fileScanner, Trip currentTrip) throws TravelTrioException {
+    private static void loadBudgetDetails(Activity lastActivity, String line, Scanner fileScanner, Trip currentTrip)
+            throws TravelTrioException {
         assert lastActivity != null : "Storage Error: " +
                 "Budget data found without a preceding Activity block.";
 
@@ -92,7 +93,8 @@ public class Storage {
         currentTrip.getBudgets().addBudget(lastActivity, budget);
     }
 
-    private static Activity loadActivityDetails(Scanner fileScanner, String titleLine, String currentDate, Trip currentTrip) throws TravelTrioException {
+    private static Activity loadActivityDetails(Scanner fileScanner, String titleLine, String currentDate,
+                                                Trip currentTrip) throws TravelTrioException {
         String title = titleLine.split(": ")[1].trim();
         String loc = fileScanner.nextLine().split(": ")[1].trim();
         String start = fileScanner.nextLine().split(": ")[1].trim();

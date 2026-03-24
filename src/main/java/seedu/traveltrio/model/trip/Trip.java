@@ -46,7 +46,6 @@ public class Trip {
             }
 
             // Add activity details
-//            sb.append(act.getName()).append("\n");
             sb.append("Title: ").append(act.getName()).append("\n");
             sb.append("    Location: ").append(act.getLocation()).append("\n");
             sb.append("    Start Time: ").append(act.getStart()).append("\n");
