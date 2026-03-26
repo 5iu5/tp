@@ -34,6 +34,9 @@ public class BudgetList {
 
     public void removeBudget(Activity activity) {
         Budget activityBudget = budgets.get(activity);
+        if (activityBudget == null){
+            return;
+        }
         totalTripBudget -= activityBudget.getTotalBudget();
         totalTripExpense -= activityBudget.getActualExpense();
 
