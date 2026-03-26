@@ -9,6 +9,7 @@ import seedu.traveltrio.model.activity.Activity;
 public class BudgetList {
     private final Map<Activity, Budget> budgets;
     private double totalTripBudget;
+    private double totalTripExpense;
 
     public BudgetList() {
         this.budgets = new HashMap<>();
@@ -45,14 +46,20 @@ public class BudgetList {
         return budgets;
     }
 
-    public void setExpense(Activity activity, double expense) throws TravelTrioException {
+    public void setExpense(Activity activity, double newExpense) throws TravelTrioException {
         assert activity != null : "Activity should not be null";
-        if (!budgets.containsKey(activity)){
+        Budget budget = budgets.get(activity);
+        if (budget == null) {
             throw new TravelTrioException("You must add a budget for this activity first.");
         }
-        // get budget object of the activity
-        Budget budget = budgets.get(activity);
-        budget.setExpense(expense);
+
+        double oldExpense = budget.getActualExpense();
+        budget.setActualExpense(newExpense);
+        totalTripExpense = totalTripExpense - oldExpense + newExpense;
+    }
+
+    public double getTotalTripExpense() {
+        return totalTripExpense;
     }
 
     public boolean isEmpty() {
