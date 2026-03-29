@@ -124,6 +124,8 @@ The feature mainly involves the following classes:
 - Activity — represents a single activity for which the budget is set.
 - ActivityList — stores all Activity objects belonging to a trip.
 - Trip — owns the corresponding ActivityList and BudgetList.
+- CommandProcessor — handles the user input, ensures a trip is open, and orchestrates the creation of the command.
+- Ui — handles all interactions with the user, such as prompting for the activity index and budget amount.
 
 The `SetBudgetCommand` receives the target `BudgetList`, `ActivityList`, the specific `Activity`, and the budget amount.
 When `SetBudgetCommand#execute()` is called, a new `Budget` is created and added to the `BudgetList` for the activity, and a success message is returned.
@@ -147,7 +149,7 @@ If the command input is invalid, or if no trip is currently opened, the command 
 **Sequence Diagram:**
 
 The following sequence diagram shows how an operation to set budget goes:
-![img.png](diagrams/SetBudgetSequenceDiagram.png)
+<puml src="diagrams/SetBudgetSequenceDiagram.puml" />
 
 ## Product scope
 ### Target user profile
