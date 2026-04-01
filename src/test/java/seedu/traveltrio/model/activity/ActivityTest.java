@@ -3,7 +3,8 @@ package seedu.traveltrio.model.activity;
 import org.junit.jupiter.api.Test;
 import seedu.traveltrio.TravelTrioException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class ActivityTest {
 
