@@ -26,7 +26,7 @@ class BudgetTest {
 
 
     @Test
-    void setActualExpense_NegativeAmount_throwsException() throws TravelTrioException {
+    void setActualExpense_negativeAmount_throwsException() throws TravelTrioException {
         Activity a = new Activity("Shopping", "Mall", "2026-03-11", "11:30", "15:00");
         double budgetAmount = 2000.00;
         Budget b = new Budget(budgetAmount, a);
