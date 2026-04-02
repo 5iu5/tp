@@ -43,14 +43,8 @@ If the command input is invalid, or if no trip is currently opened, the command 
 
 **Sequence Diagram:**
 
-1. The following sequence diagram is a simplified version that shows how an operation to add an activity goes, assuming that the user gives the correct inputs:
+- The following sequence diagram is a simplified version that shows the success path of add activity operation, assuming that the user gives the correct inputs:
 ![img.png](diagrams/AddActivitySequenceDiagram.png)
-
-2. The following sequence diagram shows the add activity operation which includes the scenario where user enters invalid inputs:
-![img.png](diagrams/AddActivitySequenceDiagramFull.png)
-For example:
-   - As shown above, when the user does not enter an activity date within the trip's date range, the system will reprompt the user for a date within that range.
-
 
 
 
