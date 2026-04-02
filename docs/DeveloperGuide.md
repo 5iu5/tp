@@ -8,7 +8,7 @@
 
 ### Add Activity to Itinerary feature
 **Implementation**<br>
-The `addactivity` feature is facilitated by `AddActivityCommand`. It allows the user to create a new `Activity` and add it to the `ActivityList` of the currently opened `Trip`.
+The `addactivity` feature is implemented using `AddActivityCommand`. Its purpose is to add a new `Activity` into the `ActivityList` of the currently opened `Trip`.
 
 The feature mainly involves the following classes:
 - AddActivityCommand — adds a new Activity into the activity list.
@@ -16,10 +16,16 @@ The feature mainly involves the following classes:
 - ActivityList — stores all Activity objects belonging to a trip.
 - Trip — owns the corresponding ActivityList.
 
-The `AddActivityCommand` receives the target `ActivityList` of the currently opened `Trip` and the `Activity` to be added. 
-When `AddActivityCommand#execute()` is called, the activity is appended to the list and a success message is returned.
+When the user invokes `addactivity`, the system first collects the required input fields from the user. These include the activity title, location, date, start time, and end time. The input is validated before command execution. In particular:
+- the activity date must fall within the currently opened trip’s date range
+- the end time must not be earlier than the start time
 
-Given below is an example usage scenario and how the add activity mechanism behaves at each step.
+After validation succeeds, the system constructs an `AddActivityCommand` object with the current trip’s `ActivityList` and the activity details provided by the user.
+
+`AddActivityCommand#execute()` is called which appends the activity to the list and a success message is returned.
+
+
+**Given below is an example usage scenario and how the add activity mechanism behaves at each step.**
 
 Step 1. The user opens a trip, for example Japan Trip. The opened Trip contains an `ActivityList`, which may initially be empty.
 
@@ -37,8 +43,10 @@ If the command input is invalid, or if no trip is currently opened, the command 
 
 **Sequence Diagram:**
 
-The following sequence diagram shows how an operation to add an activity goes:
+- The following sequence diagram is a simplified version that shows the success path of add activity operation, assuming that the user gives the correct inputs:
 ![img.png](diagrams/AddActivitySequenceDiagram.png)
+
+
 
 ### Edit Activity feature 
 **Implementation**<br>
