@@ -415,9 +415,9 @@ public class CommandProcessor {
 
     private void handleAddRemark() throws TravelTrioException{
         ensureTripOpen();
-         if (openTrip.getActivities().isEmpty()) {
+        if (openTrip.getActivities().isEmpty()) {
             throw new TravelTrioException("No activities found. Please add an activity before adding a remark.");
-         }
+        }
 
         printActivityList();
 
