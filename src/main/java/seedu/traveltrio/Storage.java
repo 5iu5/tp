@@ -98,9 +98,22 @@ public class Storage {
                     }
                     lastActivity = loadActivityDetails(fileScanner, line, currentDate, currentTrip);
                 } else if (line.contains("Budget set:")) {
-                    assert currentTrip != null: "No trip open!";
+                    assert currentTrip != null : "No trip open!";
                     loadBudgetDetails(lastActivity, line, fileScanner, currentTrip);
-                } else if (!line.startsWith("Total Budget:")){
+                } else if (line.startsWith("Packing List")) {
+                    continue;
+                } else if (line.matches("[01]\\|.*")) {
+                    if (currentTrip != null) {
+                        String[] parts = line.split("\\|", 2);
+                        boolean isPacked = parts[0].equals("1");
+                        seedu.traveltrio.model.packing.PackingItem item = new seedu.traveltrio.model.packing.PackingItem(
+                                parts[1]);
+                        if (isPacked) {
+                            item.markPacked();
+                        }
+                        currentTrip.getPackingList().addItem(item);
+                    }
+                } else if (!line.startsWith("Total Budget:")) {
                     ui.showError("Line wrongly formatted found. [" + line + "]. Check formatting.");
                 }
             }
