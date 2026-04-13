@@ -630,6 +630,80 @@ Removes Item from the packing list
     ```text
     Removed item: passport
     ```
+
+<br>
+
+## 6. General Commands
+
+### 6.1 View Help
+Displays a summary of all available commands and their basic usage to guide the user.
+
+* Format : `help`
+
+* Example Usage:
+    ```text
+    > help
+    ```
+
+* Expected Result:
+    ```text
+    -------------------- TRAVELTRIO HELP GUIDE --------------------
+    Here are the available commands. After entering a command,
+    the app will guide you step-by-step through the process.
+    
+    --- Trip Commands ---
+    1. addtrip        : Create a new trip.
+    2. listtrip       : View a list of all your planned trips.
+    3. opentrip       : Select a specific trip to manage it.
+    4. deletetrip     : Choose a trip to delete from your list.
+    5. exporttrip     : Export a specific trip to a text file for sharing.
+    6. importtrip     : Import a shared trip from a text file.
+    
+    --- Activity Commands (Requires an open trip) ---
+    7. addactivity    : Add an activity (like a flight or tour) to the open trip.
+    8. listactivity   : View all activities scheduled for the open trip.
+    9. editactivity   : Modify the details of an existing activity.
+    10. deleteactivity: Remove an activity from the itinerary.
+    11. nextactivity  : Show the next upcoming activity based on current time.
+    12. addremark     : Add a custom remark or note to a specific activity.
+    
+    --- Budget Commands (Requires an open trip) ---
+    13. setbudget     : Assign a budget to a specific activity.
+    14. setexpense    : Set the actual spending for a specific activity that has a budget.
+    15. setcurrency   : Update the exchange rate for converting foreign currency expenses to home currency.
+    16. budgetsummary : View a breakdown of expenses and remaining budget.
+    17. budgetchart   : View a visual chart of your budget versus actual spending.
+    18. listexpense   : compare budget and actual spending for activities, and show total spending.
+    19. setdailylimit : set a daily limit for expenses, warn users when limit exceeds.
+    
+    --- Packing Commands (Requires an open trip) ---
+    20. additem       : Add a new item to your packing list.
+    21. listitems     : View all items in your packing list.
+    22. checkitem     : Mark an item in your packing list as packed.
+    23. deleteitem    : Remove an item from your packing list.
+    
+    --- General Commands ---
+    24. help          : Show this help menu.
+    25. exit          : Exit the application.
+    ---------------------------------------------------------------
+    ```
+
+### 6.2 Exit Application
+Saves all current session data to the local storage file and terminates the program securely.
+
+* Format : `exit`
+
+* Example Usage:
+    ```text
+    > exit
+    ```
+
+* Expected Result:
+    ```text
+    Saving your travels...
+    Goodbye! Happy Travels!
+    ```
+  
 <br>
 
 
