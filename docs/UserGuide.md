@@ -202,6 +202,35 @@ Imports a trip schedule and its budget details from a provided text file into yo
     ```
 <br>
 
+#### 1.6 Deleting a Trip
+Permanently removes a trip from your travel planner. 
+
+* Format: `deletetrip`
+  * After entering the command, the application will prompt users for inputs:
+    * `Enter the index of the trip to delete: `
+
+* Example usage:
+
+    ```text
+    > deletetrip
+    ===========================================================
+    Trips:
+    1. Japan Winter Trip
+       Start: 2026-12-01
+       End:   2026-12-30
+    
+    2. Summer Trip at Bali
+       Start: 2026-06-01
+       End:   2026-06-30
+    ===========================================================
+    Enter the index of the trip to delete:  2
+    ```
+
+* Expected result:
+    ```text
+    Deleted trip: Summer Trip at Bali (2026-06-01 to 2026-06-30)
+    ```
+<br>
 
 ### 2. Itinerary Management
 *Note: a trip has to be "opened" by the user, in order to perform the following commands*
