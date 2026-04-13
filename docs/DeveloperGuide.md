@@ -211,6 +211,69 @@ If the command input is invalid, the command will not be executed successfully a
 The following sequence diagram shows how an operation to add a trip goes:
 ![img.png](diagrams/AddTripSequenceDiagram.png)
 
+### Delete Trip feature 
+**Implementation**<br>
+The `deletetrip` feature is facilitated by `DeleteTripCommand`. It allows the user to delete a trip from the trip list by its index.
+
+The feature mainly involves the following classes:
+- `DeleteTripCommand` — removes the specified trip from the trip list.
+- `TripList` — stores all `Trip` objects and is used to retrieve and remove the target trip.
+
+The `DeleteTripCommand` receives the target `TripList` and the 1-based index of the trip to delete. When `DeleteTripCommand#execute()` is called, it validates that the index is within the bounds of the current trip list before attempting removal. It removes the trip and returns a confirmation message.
+
+Given below is an example usage scenario and how the delete trip mechanism behaves at each step.
+
+Step 1. The user executes a `deletetrip` command and provides the 1-based index of the trip they wish to delete.
+
+Step 2. The application collects the user input, capturing the index.
+
+Step 3. The application creates a `DeleteTripCommand`, passing in the current `TripList` and the target index.
+
+Step 4. The user command is executed through `DeleteTripCommand#execute()`. The command validates that the index is valid (greater than or equal to 0, and less than the trip list size). 
+
+Step 5. The command captures the string representation of the trip to be removed and calls `tripList.remove(index)`.
+
+Step 6. A formatted string confirming the successful deletion of the trip is returned to the user.
+
+If the command input is invalid (such as an out-of-bounds index), a `TravelTrioException` is thrown and the command will not be executed successfully.
+
+**Sequence Diagram:**
+
+The following sequence diagram shows how an operation to delete a trip goes:
+
+
+### Open Trip feature
+**Implementation**<br>
+The `opentrip` feature is facilitated by `OpenTripCommand`. It allows the user to open a specific trip for editing. Crucially, it ensures only one trip is open at a time by closing any previously open trip.
+
+The feature mainly involves the following classes:
+- `OpenTripCommand` — opens the target trip and closes all others.
+- `TripList` — stores all `Trip` objects, which are iterated over to manage open states.
+- `Trip` — represents the travel plan whose open status is being modified.
+
+The `OpenTripCommand` receives the target `TripList` and the 1-based index of the trip to open. When `OpenTripCommand#execute()` is called, it iterates through the entire list to set any open trip's status to false, then sets the target trip's status to active.
+
+Given below is an example usage scenario and how the open trip mechanism behaves at each step.
+
+Step 1. The user executes an `opentrip` command, providing the index of the trip they wish to access.
+
+Step 2. The application creates an `OpenTripCommand`, passing in the `TripList` and the target index.
+
+Step 3. The user command is executed through `OpenTripCommand#execute()`. The command validates that the index is within bounds.
+
+Step 4. The command iterates through the `TripList`, checking if any `Trip` is currently open. If one is found, it calls `trip.setOpen(false)`.
+
+Step 5. The command retrieves the target trip and calls `tripToOpen.setOpen(true)`.
+
+Step 6. A formatted string confirming the successful opening of the target trip is returned.
+
+If the provided trip index is out of bounds, a `TravelTrioException` is thrown and the currently open trip (if any) remains open.
+
+**Sequence Diagram:**
+
+The following sequence diagram shows how an operation to open a trip goes:
+
+
 ### Set Budget feature
 **Implementation**<br>
 
@@ -250,6 +313,71 @@ If the command input is invalid, or if no trip is currently opened, the command 
 
 The following sequence diagram shows how an operation to set budget goes:
 ![img.png](diagrams/SetBudgetSequenceDiagram.png)
+
+### Budget Summary feature
+**Implementation**<br>
+The `budgetsummary` feature is facilitated by `BudgetSummaryCommand`. It generates a comprehensive summary of the trip's financial status, calculating overall totals and providing an itemized breakdown per activity.
+
+The feature mainly involves the following classes:
+- `BudgetSummaryCommand` — compiles the budget summary string.
+- `BudgetList` — calculates the total trip budget, total trip expense, and remaining trip budget.
+- `ActivityList` — provides the scheduled activities to match against assigned budgets.
+
+The `BudgetSummaryCommand` receives the `BudgetList` and `ActivityList`. When `BudgetSummaryCommand#execute()` is called, it builds a formatted string with overall financial totals, followed by a line-by-line breakdown of each activity that has an allocated budget.
+
+Given below is an example usage scenario and how the budget summary mechanism behaves at each step.
+
+Step 1. The user opens a trip containing an `ActivityList` and `BudgetList`.
+
+Step 2. The user executes a `budgetsummary` command.
+
+Step 3. The application creates a `BudgetSummaryCommand`, passing in the trip's `BudgetList` and `ActivityList`.
+
+Step 4. The user command is executed through `BudgetSummaryCommand#execute()`. The command fetches the total budget, total expense, and remaining budget from `BudgetList` and formats them into a summary block.
+
+Step 5. The command checks if the budget list is empty. If it contains budgets, it iterates through the `ActivityList`.
+
+Step 6. For each activity, it checks if a corresponding budget exists. If found, it appends the activity index and budget details to the itemized breakdown.
+
+Step 7. The final formatted string is displayed to the user.
+
+If no budgets have been added to the trip yet, a `TravelTrioException` is thrown to notify the user.
+
+**Sequence Diagram:**
+
+The following sequence diagram shows how an operation to view the budget summary goes:
+
+
+### Set Currency feature
+**Implementation**<br>
+The `setcurrency` feature is facilitated by `SetCurrencyCommand`. It allows the user to update the multiplier used to convert foreign currency expenses into the user's home currency for the entire trip.
+
+The feature mainly involves the following classes:
+- `SetCurrencyCommand` — updates the exchange rate.
+- `BudgetList` — holds the financial data for the trip and stores the current exchange rate.
+
+The `SetCurrencyCommand` receives the target `BudgetList`, `ActivityList`, a null/dummy activity, and the exchange rate. When `SetCurrencyCommand#execute()` is called, it applies the new conversion rate to the `BudgetList`. 
+
+Given below is an example usage scenario and how the set currency mechanism behaves at each step.
+
+Step 1. The user opens a trip containing a `BudgetList`.
+
+Step 2. The user executes a `setcurrency` command and provides the new exchange rate.
+
+Step 3. The application creates a `SetCurrencyCommand`, passing in the current trip's `BudgetList`, `ActivityList`, and the exchange rate.
+
+Step 4. The user command is executed through `SetCurrencyCommand#execute()`. The command validates that the provided exchange rate is strictly greater than zero.
+
+Step 5. The command calls `budgetList.setExchangeRate(exchangeRate)`.
+
+Step 6. A formatted string confirming the new exchange rate (e.g., "1 Foreign Currency = X.XXXX Home Currency") is returned.
+
+If the provided exchange rate is less than or equal to zero, a `TravelTrioException` is thrown.
+
+**Sequence Diagram:**
+
+The following sequence diagram shows how an operation to set the currency exchange rate goes:
+
 
 ### Storage Component
 **Implementation**<br>

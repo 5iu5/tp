@@ -436,7 +436,23 @@ Displays a visual chart showing how much of each activity's budget has been used
 
 ### 4. Expense Tracking
 
-#### 4.1 Set the Actual Expense for an Activity
+#### 4.1 Setting the Currency Exchange Rate
+Sets the multiplier used to convert foreign currency expenses into your home currency for the currently opened trip. This makes it easy to track overseas spending without doing manual math!
+*Note: The exchange rate determines how much 1 unit of foreign currency is worth in your home currency.*
+
+* Format: `setcurrency`
+  * After entering the command, the application will prompt the user for inputs:
+    * `Enter the exchange rate (1 Foreign Currency = ? Home Currency):`
+
+* Example usage:
+  ```text
+  > setcurrency
+  Enter the exchange rate (1 Foreign Currency = ? Home Currency): 1.50
+
+* Expected result:
+  Currency exchange rate set to: 1 Foreign Currency = 1.5000 Home Currency
+
+#### 4.2 Set the Actual Expense for an Activity
 Records the actual amount spent on an activity. This allows users to compare the actual expense against the planned budget for each activity in budgetsummary.
 *Note: A budget must be added for an activity before its expense can be set.*
 *Note: The user needs to specify if home currency or foreign currency is being input. 1 for foreign currency and 0 for home currency*
@@ -466,7 +482,7 @@ Records the actual amount spent on an activity. This allows users to compare the
     ```
 <br>
 
-#### 4.2 Listing all Activity Expenses
+#### 4.3 Listing all Activity Expenses
 Lists the actual expenses recorded for all activities in the currently opened trip. This allows users to review the spending for each activity and view the total expense incurred for the trip.
 
 * Format: `listexpense`
@@ -489,7 +505,7 @@ Lists the actual expenses recorded for all activities in the currently opened tr
     ```
 <br>
 
-### 4.3 Set a Daily Expense Limit for a Trip
+### 4.4 Set a Daily Expense Limit for a Trip
 Sets a daily spending limit for the currently opened trip. This allows users to manage their daily expenses more effectively and compare their total daily spending against the limit.
 
 * Format: setdailylimit
