@@ -10,40 +10,80 @@ participant ":Activity" as Activity
 
 
 User -> TravelTrio : enter "addactivity"
+activate TravelTrio
 TravelTrio -> CommandProcessor : process("addactivity")
+activate CommandProcessor
+deactivate TravelTrio
 
 CommandProcessor -> CommandProcessor : ensureTripOpen()
+
 CommandProcessor -> Ui : promptField("Activity Title")
+activate Ui
 Ui --> CommandProcessor : title
+deactivate Ui
+
 CommandProcessor -> Ui : promptField("Location")
+activate Ui
 Ui --> CommandProcessor : location
-CommandProcessor -> Ui : promptDate("Date")
-Ui --> CommandProcessor : date
+deactivate Ui
 
-CommandProcessor -> CommandProcessor : validate date within trip dates
+loop until valid date
+    CommandProcessor -> Ui : promptDate("Date")
+    activate Ui
+    Ui --> CommandProcessor : date
+    deactivate Ui
+end
+
 CommandProcessor -> Ui : promptTime("Start Time")
+activate Ui
 Ui --> CommandProcessor : startTime
-CommandProcessor -> Ui : promptTime("End Time")
-Ui --> CommandProcessor : endTime
+deactivate Ui
 
-CommandProcessor -> CommandProcessor : validate end time after start time
+CommandProcessor -> Ui : promptTime("End Time")
+activate Ui
+Ui --> CommandProcessor : endTime
+deactivate Ui
+
+alt endTime is not after startTime
+    CommandProcessor -> Ui : promptField("crosses midnight? (y/n)")
+    activate Ui
+    Ui --> CommandProcessor : confirm
+    deactivate Ui
+end
 
 create AddActivityCommand
 CommandProcessor -> AddActivityCommand : new AddActivityCommand(activityList, title, location, date, startTime, endTime)
-CommandProcessor -> AddActivityCommand : execute()
+activate AddActivityCommand
+CommandProcessor -> AddActivityCommand : run(tripName)
 
-AddActivityCommand -> AddActivityCommand : validate inputs not empty
+AddActivityCommand -> AddActivityCommand : execute(tripName)
+AddActivityCommand -> AddActivityCommand : validateActivityDateWithinTripRange(date, activityList)
 
 create Activity
-AddActivityCommand -> Activity : new Activity(title, location, date, startTime, endTime)
-Activity --> AddActivityCommand : return newActivity
+AddActivityCommand -> Activity : new Activity(name, location, date, start, end)
+activate Activity
+Activity --> AddActivityCommand
+deactivate Activity
 
 AddActivityCommand -> ActivityList : add(newActivity)
-ActivityList -> ActivityList : activities.add(newActivity)
+activate ActivityList
+ActivityList -> Activity : overlapsWith(existing)
+activate Activity
+Activity --> ActivityList
+deactivate Activity
+ActivityList -> ActivityList : add(insertIdx, newActivity)
+ActivityList --> AddActivityCommand : null
+deactivate ActivityList
 
-AddActivityCommand --> CommandProcessor : "Added activity: ..."
-CommandProcessor -> Ui : showMessageWithDivider(message)
-
+AddActivityCommand --> CommandProcessor : "Activity added to [tripName]:..."
+deactivate AddActivityCommand
 destroy AddActivityCommand
+
+CommandProcessor -> Ui : showMessageWithDivider(message)
+activate Ui
+Ui --> CommandProcessor
+deactivate Ui
+
+deactivate CommandProcessor
 
 @enduml
