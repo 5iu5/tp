@@ -21,7 +21,8 @@ public abstract class BudgetCommand {
      *
      * @param budgetList   The list containing the budgets for the current trip.
      * @param activityList The list containing the activities for the current trip.
-     * @param activity     The specific activity to apply the budget command to, or null if it applies to the whole trip.
+     * @param activity     The specific activity to apply the budget command to,
+     *                     or null if it applies to the whole trip.
      */
     public BudgetCommand(BudgetList budgetList, ActivityList activityList, Activity activity) {
         this.budgetList = budgetList;
