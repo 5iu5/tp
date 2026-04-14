@@ -188,9 +188,14 @@ public class CommandProcessor {
         }
         printActivityList();
         int budgetActivityIdx = ui.promptInt("Enter the index of the activity to add a budget for");
+        String currencyChoice = ui.promptField("Is this amount in foreign currency? (y/n)").toLowerCase();
+        boolean isForeign = currencyChoice.equals("y") || currencyChoice.equals("yes");
         double budgetAmount = ui.promptDouble("Enter budget amount ($)");
+        if (isForeign) {
+            ui.showMessage("Amount will be converted to home currency using current exchange rate.");
+        }
         ui.showMessage(new SetBudgetCommand(openTrip.getBudgets(),
-                openTrip.getActivities(), openTrip.getActivities().get(budgetActivityIdx - 1), budgetAmount)
+                openTrip.getActivities(), openTrip.getActivities().get(budgetActivityIdx - 1), budgetAmount, isForeign)
                 .run());
     }
 
@@ -255,12 +260,12 @@ public class CommandProcessor {
 
         }
 
-        int currencyChoice = ui.promptInt("Is the amount in foreign currency? (1 for Yes, 0 for No)");
-        if (currencyChoice != 0 && currencyChoice != 1) {
-            throw new TravelTrioException("Invalid choice for currency. Please enter 1 for Yes or 0 for No.");
+        String currencyChoice = ui.promptField("Is this amount in foreign currency? (y/n)");
+        if (!currencyChoice.equalsIgnoreCase("y") && !currencyChoice.equalsIgnoreCase("n")) {
+            throw new TravelTrioException("Invalid choice for currency. Please enter 'y' for Yes or 'n' for No.");
         }
         
-        boolean isForeignCurrency = currencyChoice == 1;
+        boolean isForeignCurrency = currencyChoice.equalsIgnoreCase("y");
         double actualAmount = ui.promptDouble("Enter amount spent ($)");
         String successMessage = new SetExpenseCommand(
                 openTrip.getBudgets(),
